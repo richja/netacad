@@ -1,45 +1,51 @@
+function clickPrev()
+{
+	document.getElementById("page-menu-prev-button").click();
+}
+
+function clickNext()
+{
+	document.getElementById("page-menu-next-button").click();
+}
+
 function shortyHandler(e)
 {
-	console.log("pressed");
 	switch(e.keyCode)
 	{
 		// '<-'
 		case 37:
-			document.getElementById("page-menu-next-button").click();
+			clickPrev();
 			break;
+
 		// '->'
 		case 39:
-			document.getElementById("page-menu-previous-button").click();
+			clickNext();
 			break;
 	}
 }
+
 
 window.addEventListener('keydown', shortyHandler, true);
 
 document.getElementById("frame").onload= function()
 {
 	document.getElementById("frame").contentDocument.addEventListener('keydown', shortyHandler, false);
-	document.getElementById("frame").addEventListener('keydown', shortyHandler);
-	console.log("loaded", document.getElementById("frame"));
 }
 
-var myMyo = Myo.create();
-/*myMyo.on('fist', function(edge){
-    if(!edge) return;
-    console.log('Hello Myo!');
-    myMyo.vibrate();
-});*/
+ // Myo script works only on http so far
+if (location.protocol === "http:")
+{
+	var myMyo = Myo.create();
 
-myMyo.on('wave_out', function(edge){
-    if(!edge) return;
-    console.log('To the left!');
-    // myMyo.unlock(3000);
-	document.getElementById("page-menu-previous-button").click();
-});
+	myMyo.on('wave_out', function(edge){
+	    if(!edge) return;
+		clickPrev();
+	    console.log('To the left!');
+	});
 
-myMyo.on('wave_in', function(edge){
-    if(!edge) return;
-    console.log('To the right!');
-    // myMyo.unlock(3000);
-	document.getElementById("page-menu-next-button").click();
-});
+	myMyo.on('wave_in', function(edge){
+	    if(!edge) return;
+		clickNext();
+	    console.log('To the right!');
+	});
+}
