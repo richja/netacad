@@ -3,7 +3,7 @@
 	"short_name": "CiscoShorty",
 	"author": "Jan Richter",
 	"version": "0.0.1",
-	"description": "Browse Cisco's courses on Network Academy (netacad) easily by left/right arrows.",
+	"description": "Browse Cisco's courses on Network Academy (netacad) easily by left and right arrows or even cooler by arm gestures using Myo armband.",
 	"manifest_version": 2,
 	"content_scripts": [
 	{

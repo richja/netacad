@@ -1,6 +1,6 @@
 function clickPrev()
 {
-	document.getElementById("page-menu-prev-button").click();
+	document.getElementById("page-menu-previous-button").click();
 }
 
 function clickNext()
@@ -24,28 +24,39 @@ function shortyHandler(e)
 	}
 }
 
+function attachListener()
+{
+	// wait a sec for loading content inside iframe
+	setTimeout(function()
+	{
+		document.getElementById("frame").contentDocument.body.addEventListener('keydown', shortyHandler, false);
+	}, 1000);
+}
+attachListener();
 
 window.addEventListener('keydown', shortyHandler, true);
+window.onhashchange = attachListener;
 
-document.getElementById("frame").onload= function()
-{
-	document.getElementById("frame").contentDocument.addEventListener('keydown', shortyHandler, false);
-}
+/**
+ * MYO ARMBAND SUPPORT
+ * Myo.js works only on http so far
+ */
 
- // Myo script works only on http so far
 if (location.protocol === "http:")
 {
 	var myMyo = Myo.create();
 
-	myMyo.on('wave_out', function(edge){
-	    if(!edge) return;
+	myMyo.on('wave_out', function(edge)
+	{
+		// to the left/prev slide
+		if(!edge || !document.hasFocus()) return;
 		clickPrev();
-	    console.log('To the left!');
 	});
 
-	myMyo.on('wave_in', function(edge){
-	    if(!edge) return;
+	myMyo.on('wave_in', function(edge)
+	{
+		// to the right/next slide
+		if(!edge || !document.hasFocus()) return;
 		clickNext();
-	    console.log('To the right!');
 	});
 }
